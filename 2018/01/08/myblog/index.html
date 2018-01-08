@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="momomao">
 <meta property="og:description" content="记录hexo建站的一些深坑和疑惑 历时两天被坑的各种的无奈——bymomomao  1.各种花式错误大概率都是空格的锅 比如在新建一个文章这里卡了好久好久，报如下两种错误，为什么呢？google了一下才在一篇角落里的blog发现，新建的md文件也要严格遵守冒号后面加一个英文空格！根目录下的配置文件_config.yml也是！ 12ERROR Process failed: _posts/myblo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-08T14:35:04.000Z">
+<meta property="og:updated_time" content="2018-01-08T15:32:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的第一篇博客">
 <meta name="twitter:description" content="记录hexo建站的一些深坑和疑惑 历时两天被坑的各种的无奈——bymomomao  1.各种花式错误大概率都是空格的锅 比如在新建一个文章这里卡了好久好久，报如下两种错误，为什么呢？google了一下才在一篇角落里的blog发现，新建的md文件也要严格遵守冒号后面加一个英文空格！根目录下的配置文件_config.yml也是！ 12ERROR Process failed: _posts/myblo">
@@ -192,7 +192,7 @@
 <p>比如在新建一个文章这里卡了好久好久，报如下两种错误，为什么呢？google了一下才在一篇角落里的blog发现，新建的md文件也要严格遵守冒号后面加一个英文空格！根目录下的配置文件_config.yml也是！</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR Process failed: _posts/myblog.md</span><br><span class="line">YAMLException: can not read a block mapping entry; a multiline key may not be an implicit key at line 4, column 1:</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR Process failed: _posts/myfirst.md</span><br><span class="line">TypeError: Cannot read property &apos;utcOffset&apos; of null</span><br></pre></td></tr></table></figure>
-<p>2.在deploy之后，域名重定向经常挂掉，甚至github pages的页面也会挂掉最后hexo服务器也挂掉。。。<br>一个原因是：之前是直接在github库里新建的CNAMEW文件，但是本地并没有这个文件，所以每次重新deploy提交后会覆盖，就不存在CNAME这个文件了。emmm具体怎么解决应该是先git pull更新一下本地吧（但是我失败了，所以懒得弄了so sad）</p>
+<p>2.在deploy之后，域名重定向经常挂掉，甚至github pages的页面也会挂掉最后hexo服务器也挂掉。。。<br>一个原因是：之前是直接在github库里新建的CNAME文件，但是本地并没有这个文件，所以每次重新deploy提交后会覆盖，就不存在CNAME这个文件了。emmm具体怎么解决应该是先git pull更新一下本地吧（但是我失败了，所以懒得弄了so sad）</p>
 <p>3.（没解决）头像问题<br>在xxx.github.io的地址可以出现头像但是在重定向域名momomaott.top里网站无法显示</p>
 
       
