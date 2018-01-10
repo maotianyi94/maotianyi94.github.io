@@ -165,6 +165,117 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-holoclean" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/10/holoclean/">holoclean</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/10/holoclean/" class="archive-article-date">
+  	<time datetime="2018-01-10T12:02:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="HoloClean-Holistic-Data-Repairs-with-Probabilistic-Inference"><a href="#HoloClean-Holistic-Data-Repairs-with-Probabilistic-Inference" class="headerlink" title="HoloClean: Holistic Data Repairs with Probabilistic Inference"></a>HoloClean: Holistic Data Repairs with Probabilistic Inference</h3><blockquote>
+<p><strong>摘要</strong> 我们介绍HoloClean，++一个由概率推理驱动的整体数据修复框架。++ HoloClean将依赖于完整性约束或外部数据源的定性数据修复与定量数据修复方法统一起来，该方法利用输入数据的统计特性。 给定不一致的数据集作为输入，HoloClean会自动生成一个执行数据修复的概率程序。 受近期概率推理的理论进展的启发，我们引入一系列优化，确保对HoloClean的概率模型的推断可以扩展到具有数百万个元组的实例。 我们发现，HoloClean发现数据修复的平均精度约为90％，平均回忆率在76％以上，表现出不同类型的错误。 与最先进的方法相比，这会使平均F1改进超过2倍。</p>
+</blockquote>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><ul>
+<li>介绍了数据清洗（data cleaning）分为两个任务：</li>
+</ul>
+<p>i.错误检测 ：依赖违反完整性约束或重复／异常值检测来识别错误。</p>
+<p>ii.数据修复：最先进技术使用信号如（i）完整性约束，（ii）外部信息，如字典，知识库和注释专家，或（iii）数量统计。</p>
+<ul>
+<li>本篇论文将这些信号结合在一个统一的框架中，可以获得平均F1分数大于0.8的数据修复</li>
+<li>一些数据修复方法依赖完整性约束，假设大部分数据是clean的并且使用最小化原则(minimality)，但是最小修复并不意味着正确修复。</li>
+<li>依赖外部数据匹配关系数据集合，外部覆盖范围有限</li>
+<li>基于统计分析方法，忽略了完整性约束，利用定量统计如数据值同现（co-occurrences of attribute values）</li>
+<li>因为异构信号不易结合，会导致冲突修复，在本文中回答的主要问题：我们如何将所有上述信号结合在一个统一的数据清理框架中，哪些信号有助于修复输入数据集中的不同记录？</li>
+<li><strong>holoclean</strong>：第一个数据清洗系统，统一完整性约束，外部数据和量化统计，依靠概率论。生成一个概率模型，概率模型提供了统一所有信号的手段。信号转换成图模型的特征，<blockquote>
+<p><strong>概率推断</strong>的核心任务就是计算某分布下的某个函数的期望、或者计算边缘概率分布、条件概率分布等等。 </p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><strong>Gibbs sampling</strong>:不知道三件事的联合分布joint distribution。但是，我们知道三件事的条件分布conditional distribution。也就是说，p(E|T,W),p(T|E,W),p(W|E,T)。现在要做的就是通过这三个已知的条件分布，再用gibbs sampling的方法，得到联合分布。</p>
+</blockquote>
+<p>Contribution：<br><br>(1）我们<strong>设计一个编译器</strong>，生成一个统一不同的信号来修复数据集的概率模型。 我们的编译器支持不同的错误检测方法，如约束违规检测和异常检测。<br><br>(2)我们<strong>设计一种算法</strong>，使用贝叶斯分析来修剪输入数据集中与噪声单元相对应的随机变量的域（见第5.1.1节）。 该算法使我们能够系统地权衡HoloClean的可扩展性和由此获得的维修质量。 我们还引入了一种方案，将输入数据集分割成非重叠的元组，并枚举完整性约束引入的相关性，仅用于同一组中的元组（请参阅第5.1.2节）。 这两个优化使HoloClean可以扩展到数百万元的数据清理实例。 我们研究了这些优化对HoloClean性能的协同效应，并且表明，当随机变量具有较大的域时，分区可以导致速度提高到2倍而质量没有显着恶化（在F1中观察到平均下降0.5％）。<br><br>(<strong>3</strong>)我们<strong>引入一个近似方案</strong>，放松对独立随机变量的先验严格的完整性约束（见第5.2节）。 这种松弛的结果是一个概率模型，其中吉布斯采样只需要多项式的多项式混合。 我们经验性地研究了在放宽完整性约束条件时所获得的运行时间和修理质量之间的折中。 我们表明，我们的近似不仅导致更多可扩展的数据修复模型，而且还导致与非近似模型获得的质量相同的质量修复（参见第6节）。</p>
+<h2 id="2-Holoclean-Framework"><a href="#2-Holoclean-Framework" class="headerlink" title="2.Holoclean Framework"></a>2.Holoclean Framework</h2><ul>
+<li>goal:目标是识别和修复结构化数据库中的错误记录。</li>
+<li>workflow:三个步骤</li>
+<li>error detection划分D为noisy和clean（Dn／Dc），作为黑盒使用，最先进的错误检测方法refer the reader to the work of Abedjan</li>
+<li>compilation：汇编。 给定初始单元值Ω和修复约束集合Σ，HoloClean遵循概率语义来表达噪声单元值的不确定性。 具体来说，它将每个单元c∈D与一个随机变量Tc相关联，该随机变量Tc从有限域dom（c）取值，并且编译描述D中单元的随机变量Tc的分布的概率图形模型。HoloClean依赖于因子图 [35]来表示变量Tc的概率分布。 HoloClean使用声明式概率推理框架DeepDive [46]来运行统计学习和推理。 在3.2节中，我们回顾了因素图，以及在DeepDive中如何定义概率模型。</li>
+<li>data repairing：使用经验风险最小化（ERM）的概率log P（T）来计算其概率模型的参数，Dc作label学习参数，Dn需要推断，Gibbs采样估计vˆc，v^c分配到MAP估计Tc。边际概率</li>
+<li>一些符号定义：<br><br>dataset <strong>D</strong><br><br><strong>A</strong>={A1，A2，…}属性<br><br>tuple t \in  D<br><br>operators <strong>B</strong> (<strong>o</strong> \in B)<br><br>predicate <strong>Pk</strong></li>
+</ul>
+<h2 id="3-Background"><a href="#3-Background" class="headerlink" title="3.Background"></a>3.Background</h2><ul>
+<li>3.1 denial constraint</li>
+<li>3.2 factor graph<blockquote>
+<p>概率图模型：<br><a href="http://www.cnblogs.com/hxsyl/p/5225635.html" target="_blank" rel="noopener">http://www.cnblogs.com/hxsyl/p/5225635.html</a><br>因子图是一种概率图模型</p>
+</blockquote>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">database</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/10/holoclean/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-myblog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -341,6 +452,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">life</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">database</a>
               </li>
             
             <div class="clearfix"></div>
